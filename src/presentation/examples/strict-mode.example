@@ -1,0 +1,31 @@
+const { StrictMode } = React;
+
+class Main extends React.Component {
+  componentWillMount() {
+    this.setState({ livingDangerously: true });
+  }
+  render() {
+    return <div style={styles.copy}>Check the console...</div>
+  }
+}
+
+class App extends React.Component {
+
+  render() {
+    return (
+      <StrictMode>
+        <Main style={styles.copy} />
+      </StrictMode>
+    );
+  }
+}
+
+render(<App />);
+
+const styles = {
+  copy: {
+    fontSize: '2vw',
+    margin: '2vw',
+    color: '#333'
+  }
+}

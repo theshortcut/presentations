@@ -1,0 +1,56 @@
+class IsLoggedIn extends React.Component {
+  static getDerivedStateFromProps(nextProps, prevProps) {
+    return {
+      loggedIn: !!nextProps.user
+    }
+  }
+
+  constructor() {
+    this.state = {}
+  }
+
+  render() {
+    return (
+      <div style={styles.copy}>
+        this.state.loggedIn: {this.state.loggedIn ? 'true' : 'false'}
+      </div>
+    )
+  }
+}
+
+class ParentComponent extends React.Component {
+  constructor() {
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <div style={styles.wrapper}>
+        <IsLoggedIn user={this.state.user} />
+
+        <button
+          style={styles.copy}
+          onClick={() => this.setState({ user: this.state.user ? null : { username: 'cferris' }})}
+        >
+          Sign {this.state.user ? 'Out' : 'In'}
+        </button>
+      </div>
+    )
+  }
+}
+
+render(<ParentComponent />);
+
+const styles = {
+  wrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  copy: {
+    fontSize: '2.5vw',
+    margin: '3vw 0',
+    color: '#333'
+  }
+}

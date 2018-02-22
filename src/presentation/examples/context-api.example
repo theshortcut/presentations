@@ -1,0 +1,69 @@
+const users = [{
+  username: 'cferris',
+  token: 'my sweet token'
+}, {
+  username: 'broseph',
+  token: 'another token'
+}];
+
+const {
+  Provider: AuthProvider,
+  Consumer: AuthConsumer
+} = React.createContext({ user: users[0] });
+
+const UserDisplay = ({ user }) => (
+  <React.Fragment>
+    <div>username: {user.username}</div>
+    <div>token: {user.token}</div>
+  </React.Fragment>
+)
+
+class ContextDemo extends React.Component {
+  constructor() {
+    super();
+    this.state = { selectedUserId: 1 };
+    this.switchUser = this.switchUser.bind(this);
+  }
+
+  switchUser() {
+    this.setState({
+      selectedUserId: this.state.selectedUserId ^ 1
+    });
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        <div style={styles.container}>
+
+          <h4>Without No Provider (default):</h4>
+          <AuthConsumer>
+            {({ user }) => <UserDisplay user={user}/>}
+          </AuthConsumer>
+
+        </div>
+        <div style={styles.container}>
+
+          <h4>With Provider Value:</h4>
+          <AuthProvider value={{ user: users[this.state.selectedUserId] }}>
+            <AuthConsumer>
+              {({ user }) => <UserDisplay user={user}/>}
+            </AuthConsumer>
+          </AuthProvider>
+
+        </div>
+        <button onClick={this.switchUser}>Switch Provided User</button>
+      </React.Fragment>
+    )
+  }
+}
+
+render(<ContextDemo />);
+
+const styles = {
+  container: {
+    color: '#333',
+    fontSize: '1.5rem',
+    padding: '1rem'
+  }
+};
